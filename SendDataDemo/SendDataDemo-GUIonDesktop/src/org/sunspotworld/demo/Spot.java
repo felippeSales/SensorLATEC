@@ -19,11 +19,28 @@ public class Spot {
     private int[] val = new int[MAX_SAMPLES];
     private long addr;
     private Color color;
+    private boolean visible = true;
 
     public Spot(Color color, long addr) {
        this.color = color;
        this.addr = addr;
 
+    }
+
+    public void alternaVisible(){
+        if(visible == true){
+            visible = false;
+        }else{
+            visible = true;
+        }
+    }
+
+    public boolean isVisible(){
+        if(visible){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public void addData(long t, int v) {
