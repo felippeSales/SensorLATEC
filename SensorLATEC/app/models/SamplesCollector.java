@@ -5,6 +5,7 @@ import java.util.Map;
 
 
 
+
 import com.sun.spot.io.j2me.radiogram.*;
 import com.sun.spot.peripheral.ota.OTACommandServer;
 
@@ -24,17 +25,15 @@ public class SamplesCollector {
     
     private static final int SLEEP_TIME = 10000;
     
+    TimeSeriesGraph chart;
     public Map<Long,Spot> spots;
-    
- //   DateFormat fmt = DateFormat.getDateTimeInstance();
-    
+        
     public SamplesCollector(){  	
     	spots = new HashMap<Long,Spot>();
-    	
-    	OTACommandServer.start("SendDataDemo-GUI");	    	
+    	chart = new TimeSeriesGraph();	
     }
-    
-    public Spot[] spotsToArray() throws SpotsNotFoundException{
+  
+    private Spot[] spotsToArray() throws SpotsNotFoundException{
     	Spot[] arraySpots = new Spot[spots.size()];
 	    
     	if(spots.size() != 0){
@@ -49,6 +48,19 @@ public class SamplesCollector {
     	return arraySpots;
     }
     
+    public void createChart(){
+    	Spot[] temp;
+		try {
+			temp = spotsToArray();
+		
+	    	for(int i = 0; i < temp.length; i++){
+	    		chart.createLine(String.valueOf(temp[i].getAddr()), temp[i].getTime(), temp[i].getVal());
+	    	}
+		} catch (SpotsNotFoundException e) {
+			e.printStackTrace();
+		}
+    }
+    
     private Spot findSpot(long addr) {
     	
     	if(!spots.containsKey(addr)){
@@ -57,12 +69,15 @@ public class SamplesCollector {
     	
     	return spots.get(addr);	    	
     }    
-    
+    	
     private void addData(long time, int value, long addr) {
         findSpot(addr).addData(time, value);
     }
     
     public void run() throws Exception {
+
+    	//OTACommandServer.start("SendDataDemo-GUI");	    
+    	
         RadiogramConnection rCon;
         Radiogram dg;
         
@@ -85,6 +100,7 @@ public class SamplesCollector {
                 int val = dg.readInt();         // read the sensor value
                 
                 addData(time, val, dg.getAddressAsLong());
+                System.out.println(val);
                 
             } catch (Exception e) {
                 System.err.println("Caught " + e +  " while reading sensor samples.");
@@ -100,13 +116,13 @@ public class SamplesCollector {
     }
     
   
-//    public static void main(String[] args) throws Exception {
-//        // register the application's name with the OTA Command server & start OTA running
-//        OTACommandServer.start("SendDataDemo-GUI");
-//
-//        GetSamples app = new GetSamples();
-//        
-//        app.run();
-//    }
+    public static void main(String[] args) throws Exception {
+        // register the application's name with the OTA Command server & start OTA running
+        OTACommandServer.start("SendDataDemo-GUI");
+        
+        SamplesCollector app = new SamplesCollector();
+        
+        app.run();
+    }
 }
 

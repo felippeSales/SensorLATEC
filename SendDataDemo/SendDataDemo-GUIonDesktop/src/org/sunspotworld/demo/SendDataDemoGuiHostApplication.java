@@ -24,14 +24,14 @@
 
 package org.sunspotworld.demo;
 
-import com.sun.spot.io.j2me.radiogram.*;
-
-import com.sun.spot.peripheral.ota.OTACommandServer;
-import com.sun.spot.util.IEEEAddress;
-import javax.microedition.io.*;
+import javax.microedition.io.Connector;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import com.sun.spot.io.j2me.radiogram.Radiogram;
+import com.sun.spot.io.j2me.radiogram.RadiogramConnection;
+import com.sun.spot.peripheral.ota.OTACommandServer;
 
 
 /**
@@ -127,7 +127,7 @@ public class SendDataDemoGuiHostApplication {
      */
     public static void main(String[] args) throws Exception {
         // register the application's name with the OTA Command server & start OTA running
-        OTACommandServer.start("SendDataDemo-GUI");
+       // OTACommandServer.start("SendDataDemo-GUI");
 
         SendDataDemoGuiHostApplication app = new SendDataDemoGuiHostApplication();
         app.setup();

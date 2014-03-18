@@ -1,11 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.sunspotworld.demo;
-
-import java.awt.Color;
 
 /**
  *
@@ -18,11 +11,11 @@ public class Spot {
     private long[] time = new long[MAX_SAMPLES];
     private int[] val = new int[MAX_SAMPLES];
     private long addr;
-    private Color color;
+
     private boolean visible = true;
 
-    public Spot(Color color, long addr) {
-       this.color = color;
+    public Spot(long addr) {
+     
        this.addr = addr;
 
     }
@@ -59,9 +52,6 @@ public class Spot {
        return index;
     }
     
-    public Color getColor(){
-        return color;
-    }
 
     public long getAddr(){
         return addr;
