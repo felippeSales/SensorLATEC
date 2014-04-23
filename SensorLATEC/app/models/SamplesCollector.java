@@ -6,6 +6,7 @@ import java.util.Map;
 
 
 
+
 import com.sun.spot.io.j2me.radiogram.*;
 import com.sun.spot.peripheral.ota.OTACommandServer;
 
@@ -25,9 +26,11 @@ public class SamplesCollector {
     
     private static final int SLEEP_TIME = 10000;
     
+  
     TimeSeriesGraph chart;
-    public Map<Long,Spot> spots;
-        
+    
+    public Map<Long,Spot> spots;  
+          
     public SamplesCollector(){  	
     	spots = new HashMap<Long,Spot>();
     	chart = new TimeSeriesGraph();	
@@ -56,6 +59,7 @@ public class SamplesCollector {
 	    	for(int i = 0; i < temp.length; i++){
 	    		chart.createLine(String.valueOf(temp[i].getAddr()), temp[i].getTime(), temp[i].getVal());
 	    	}
+	    	
 		} catch (SpotsNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -114,9 +118,13 @@ public class SamplesCollector {
     public int getSleepTime(){
     	return SLEEP_TIME;
     }
+   
     
-  
     public static void main(String[] args) throws Exception {
+//    	args = new String[2];
+//        args[0] = "-DSERIAL_PORT=COM5";
+//    	args[1] = "-Djava.library.path=C:\\lib";
+//    	
         // register the application's name with the OTA Command server & start OTA running
         OTACommandServer.start("SendDataDemo-GUI");
         

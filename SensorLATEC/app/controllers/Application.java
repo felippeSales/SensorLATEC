@@ -12,7 +12,7 @@ public class Application extends Controller {
 	
     public static Result index() {
     	
-    	collector = new SamplesCollector();
+    	//collector = new SamplesCollector();
     	
     	try {
 			collector.run();
